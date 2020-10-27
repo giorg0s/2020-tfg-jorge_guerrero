@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/../ports/.idea/resnet_port.iml" filepath="$PROJECT_DIR$/../ports/.idea/resnet_port.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/resnet_port.iml" filepath="$PROJECT_DIR$/.idea/resnet_port.iml" />
     </modules>
   </component>
 </project>
