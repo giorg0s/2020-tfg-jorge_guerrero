@@ -1,6 +1,7 @@
 import os
 import sys
 import onnx
+import onnxruntime
 
 original_stdout = sys.stdout
 
@@ -13,4 +14,6 @@ with open(os.path.splitext(filename)[0]+"_onnx.txt", 'w') as f:
     sys.stdout = f
     print('Model :\n\n{}'.format(onnx.helper.printable_graph(model.graph)))
     sys.stdout = original_stdout
+
+
 
