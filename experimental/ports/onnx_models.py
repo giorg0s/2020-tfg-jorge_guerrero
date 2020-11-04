@@ -80,6 +80,12 @@ def export_model():
         print('{}'.format(onnx.helper.printable_graph(exported_model.graph)))
         sys.stdout = original_stdout
 
+    print("Exporting ONNX model to TF-2.3.1...")
+    onnx_to_tf(export_file, os.path.splitext(export_file)[0] + "-tf")
+
+    print("\nDONE")
+    sys.exit()
+
 
 def onnx_to_tf(onnx_model, output):
     onnx_model = onnx.load(onnx_model)  # load onnx model
@@ -87,10 +93,5 @@ def onnx_to_tf(onnx_model, output):
     tf_rep.export_graph(output)  # export the model
 
 
-def main():
-    export_model()
-    onnx_to_tf("exported-models/resnet50.onnx", "resnet50-tf")
-
-
 if __name__ == '__main__':
-    main()
+    export_model()
