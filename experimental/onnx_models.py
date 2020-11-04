@@ -17,7 +17,7 @@ from onnx_tf.backend import prepare
 EXPORT_MOBILENET = "exported-models/mobilenet_v2.onnx"
 EXPORT_RESNET = "exported-models/resnet50.onnx"
 
-img = Image.open("img/cat.jpg")
+img = Image.open("resources/imgs/cat.jpg")
 img_tensor = ToTensor()(img).unsqueeze(0)
 cat_img = Variable(img_tensor)
 
