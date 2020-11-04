@@ -1,0 +1,218 @@
+graph torch-jit-export (
+  %input[FLOAT, batch_sizex3x1199x1200]
+) initializers (
+  %475[FLOAT, 32x3x3x3]
+  %476[FLOAT, 32]
+  %478[FLOAT, 32x1x3x3]
+  %479[FLOAT, 32]
+  %481[FLOAT, 16x32x1x1]
+  %482[FLOAT, 16]
+  %484[FLOAT, 96x16x1x1]
+  %485[FLOAT, 96]
+  %487[FLOAT, 96x1x3x3]
+  %488[FLOAT, 96]
+  %490[FLOAT, 24x96x1x1]
+  %491[FLOAT, 24]
+  %493[FLOAT, 144x24x1x1]
+  %494[FLOAT, 144]
+  %496[FLOAT, 144x1x3x3]
+  %497[FLOAT, 144]
+  %499[FLOAT, 24x144x1x1]
+  %500[FLOAT, 24]
+  %502[FLOAT, 144x24x1x1]
+  %503[FLOAT, 144]
+  %505[FLOAT, 144x1x3x3]
+  %506[FLOAT, 144]
+  %508[FLOAT, 32x144x1x1]
+  %509[FLOAT, 32]
+  %511[FLOAT, 192x32x1x1]
+  %512[FLOAT, 192]
+  %514[FLOAT, 192x1x3x3]
+  %515[FLOAT, 192]
+  %517[FLOAT, 32x192x1x1]
+  %518[FLOAT, 32]
+  %520[FLOAT, 192x32x1x1]
+  %521[FLOAT, 192]
+  %523[FLOAT, 192x1x3x3]
+  %524[FLOAT, 192]
+  %526[FLOAT, 32x192x1x1]
+  %527[FLOAT, 32]
+  %529[FLOAT, 192x32x1x1]
+  %530[FLOAT, 192]
+  %532[FLOAT, 192x1x3x3]
+  %533[FLOAT, 192]
+  %535[FLOAT, 64x192x1x1]
+  %536[FLOAT, 64]
+  %538[FLOAT, 384x64x1x1]
+  %539[FLOAT, 384]
+  %541[FLOAT, 384x1x3x3]
+  %542[FLOAT, 384]
+  %544[FLOAT, 64x384x1x1]
+  %545[FLOAT, 64]
+  %547[FLOAT, 384x64x1x1]
+  %548[FLOAT, 384]
+  %550[FLOAT, 384x1x3x3]
+  %551[FLOAT, 384]
+  %553[FLOAT, 64x384x1x1]
+  %554[FLOAT, 64]
+  %556[FLOAT, 384x64x1x1]
+  %557[FLOAT, 384]
+  %559[FLOAT, 384x1x3x3]
+  %560[FLOAT, 384]
+  %562[FLOAT, 64x384x1x1]
+  %563[FLOAT, 64]
+  %565[FLOAT, 384x64x1x1]
+  %566[FLOAT, 384]
+  %568[FLOAT, 384x1x3x3]
+  %569[FLOAT, 384]
+  %571[FLOAT, 96x384x1x1]
+  %572[FLOAT, 96]
+  %574[FLOAT, 576x96x1x1]
+  %575[FLOAT, 576]
+  %577[FLOAT, 576x1x3x3]
+  %578[FLOAT, 576]
+  %580[FLOAT, 96x576x1x1]
+  %581[FLOAT, 96]
+  %583[FLOAT, 576x96x1x1]
+  %584[FLOAT, 576]
+  %586[FLOAT, 576x1x3x3]
+  %587[FLOAT, 576]
+  %589[FLOAT, 96x576x1x1]
+  %590[FLOAT, 96]
+  %592[FLOAT, 576x96x1x1]
+  %593[FLOAT, 576]
+  %595[FLOAT, 576x1x3x3]
+  %596[FLOAT, 576]
+  %598[FLOAT, 160x576x1x1]
+  %599[FLOAT, 160]
+  %601[FLOAT, 960x160x1x1]
+  %602[FLOAT, 960]
+  %604[FLOAT, 960x1x3x3]
+  %605[FLOAT, 960]
+  %607[FLOAT, 160x960x1x1]
+  %608[FLOAT, 160]
+  %610[FLOAT, 960x160x1x1]
+  %611[FLOAT, 960]
+  %613[FLOAT, 960x1x3x3]
+  %614[FLOAT, 960]
+  %616[FLOAT, 160x960x1x1]
+  %617[FLOAT, 160]
+  %619[FLOAT, 960x160x1x1]
+  %620[FLOAT, 960]
+  %622[FLOAT, 960x1x3x3]
+  %623[FLOAT, 960]
+  %625[FLOAT, 320x960x1x1]
+  %626[FLOAT, 320]
+  %628[FLOAT, 1280x320x1x1]
+  %629[FLOAT, 1280]
+  %630[INT64, 1]
+  %classifier.1.bias[FLOAT, 1000]
+  %classifier.1.weight[FLOAT, 1000x1280]
+) {
+  %474 = Conv[dilations = [1, 1], group = 1, kernel_shape = [3, 3], pads = [1, 1, 1, 1], strides = [2, 2]](%input, %475, %476)
+  %317 = Clip[max = 6, min = 0](%474)
+  %477 = Conv[dilations = [1, 1], group = 32, kernel_shape = [3, 3], pads = [1, 1, 1, 1], strides = [1, 1]](%317, %478, %479)
+  %320 = Clip[max = 6, min = 0](%477)
+  %480 = Conv[dilations = [1, 1], group = 1, kernel_shape = [1, 1], pads = [0, 0, 0, 0], strides = [1, 1]](%320, %481, %482)
+  %483 = Conv[dilations = [1, 1], group = 1, kernel_shape = [1, 1], pads = [0, 0, 0, 0], strides = [1, 1]](%480, %484, %485)
+  %325 = Clip[max = 6, min = 0](%483)
+  %486 = Conv[dilations = [1, 1], group = 96, kernel_shape = [3, 3], pads = [1, 1, 1, 1], strides = [2, 2]](%325, %487, %488)
+  %328 = Clip[max = 6, min = 0](%486)
+  %489 = Conv[dilations = [1, 1], group = 1, kernel_shape = [1, 1], pads = [0, 0, 0, 0], strides = [1, 1]](%328, %490, %491)
+  %492 = Conv[dilations = [1, 1], group = 1, kernel_shape = [1, 1], pads = [0, 0, 0, 0], strides = [1, 1]](%489, %493, %494)
+  %333 = Clip[max = 6, min = 0](%492)
+  %495 = Conv[dilations = [1, 1], group = 144, kernel_shape = [3, 3], pads = [1, 1, 1, 1], strides = [1, 1]](%333, %496, %497)
+  %336 = Clip[max = 6, min = 0](%495)
+  %498 = Conv[dilations = [1, 1], group = 1, kernel_shape = [1, 1], pads = [0, 0, 0, 0], strides = [1, 1]](%336, %499, %500)
+  %339 = Add(%489, %498)
+  %501 = Conv[dilations = [1, 1], group = 1, kernel_shape = [1, 1], pads = [0, 0, 0, 0], strides = [1, 1]](%339, %502, %503)
+  %342 = Clip[max = 6, min = 0](%501)
+  %504 = Conv[dilations = [1, 1], group = 144, kernel_shape = [3, 3], pads = [1, 1, 1, 1], strides = [2, 2]](%342, %505, %506)
+  %345 = Clip[max = 6, min = 0](%504)
+  %507 = Conv[dilations = [1, 1], group = 1, kernel_shape = [1, 1], pads = [0, 0, 0, 0], strides = [1, 1]](%345, %508, %509)
+  %510 = Conv[dilations = [1, 1], group = 1, kernel_shape = [1, 1], pads = [0, 0, 0, 0], strides = [1, 1]](%507, %511, %512)
+  %350 = Clip[max = 6, min = 0](%510)
+  %513 = Conv[dilations = [1, 1], group = 192, kernel_shape = [3, 3], pads = [1, 1, 1, 1], strides = [1, 1]](%350, %514, %515)
+  %353 = Clip[max = 6, min = 0](%513)
+  %516 = Conv[dilations = [1, 1], group = 1, kernel_shape = [1, 1], pads = [0, 0, 0, 0], strides = [1, 1]](%353, %517, %518)
+  %356 = Add(%507, %516)
+  %519 = Conv[dilations = [1, 1], group = 1, kernel_shape = [1, 1], pads = [0, 0, 0, 0], strides = [1, 1]](%356, %520, %521)
+  %359 = Clip[max = 6, min = 0](%519)
+  %522 = Conv[dilations = [1, 1], group = 192, kernel_shape = [3, 3], pads = [1, 1, 1, 1], strides = [1, 1]](%359, %523, %524)
+  %362 = Clip[max = 6, min = 0](%522)
+  %525 = Conv[dilations = [1, 1], group = 1, kernel_shape = [1, 1], pads = [0, 0, 0, 0], strides = [1, 1]](%362, %526, %527)
+  %365 = Add(%356, %525)
+  %528 = Conv[dilations = [1, 1], group = 1, kernel_shape = [1, 1], pads = [0, 0, 0, 0], strides = [1, 1]](%365, %529, %530)
+  %368 = Clip[max = 6, min = 0](%528)
+  %531 = Conv[dilations = [1, 1], group = 192, kernel_shape = [3, 3], pads = [1, 1, 1, 1], strides = [2, 2]](%368, %532, %533)
+  %371 = Clip[max = 6, min = 0](%531)
+  %534 = Conv[dilations = [1, 1], group = 1, kernel_shape = [1, 1], pads = [0, 0, 0, 0], strides = [1, 1]](%371, %535, %536)
+  %537 = Conv[dilations = [1, 1], group = 1, kernel_shape = [1, 1], pads = [0, 0, 0, 0], strides = [1, 1]](%534, %538, %539)
+  %376 = Clip[max = 6, min = 0](%537)
+  %540 = Conv[dilations = [1, 1], group = 384, kernel_shape = [3, 3], pads = [1, 1, 1, 1], strides = [1, 1]](%376, %541, %542)
+  %379 = Clip[max = 6, min = 0](%540)
+  %543 = Conv[dilations = [1, 1], group = 1, kernel_shape = [1, 1], pads = [0, 0, 0, 0], strides = [1, 1]](%379, %544, %545)
+  %382 = Add(%534, %543)
+  %546 = Conv[dilations = [1, 1], group = 1, kernel_shape = [1, 1], pads = [0, 0, 0, 0], strides = [1, 1]](%382, %547, %548)
+  %385 = Clip[max = 6, min = 0](%546)
+  %549 = Conv[dilations = [1, 1], group = 384, kernel_shape = [3, 3], pads = [1, 1, 1, 1], strides = [1, 1]](%385, %550, %551)
+  %388 = Clip[max = 6, min = 0](%549)
+  %552 = Conv[dilations = [1, 1], group = 1, kernel_shape = [1, 1], pads = [0, 0, 0, 0], strides = [1, 1]](%388, %553, %554)
+  %391 = Add(%382, %552)
+  %555 = Conv[dilations = [1, 1], group = 1, kernel_shape = [1, 1], pads = [0, 0, 0, 0], strides = [1, 1]](%391, %556, %557)
+  %394 = Clip[max = 6, min = 0](%555)
+  %558 = Conv[dilations = [1, 1], group = 384, kernel_shape = [3, 3], pads = [1, 1, 1, 1], strides = [1, 1]](%394, %559, %560)
+  %397 = Clip[max = 6, min = 0](%558)
+  %561 = Conv[dilations = [1, 1], group = 1, kernel_shape = [1, 1], pads = [0, 0, 0, 0], strides = [1, 1]](%397, %562, %563)
+  %400 = Add(%391, %561)
+  %564 = Conv[dilations = [1, 1], group = 1, kernel_shape = [1, 1], pads = [0, 0, 0, 0], strides = [1, 1]](%400, %565, %566)
+  %403 = Clip[max = 6, min = 0](%564)
+  %567 = Conv[dilations = [1, 1], group = 384, kernel_shape = [3, 3], pads = [1, 1, 1, 1], strides = [1, 1]](%403, %568, %569)
+  %406 = Clip[max = 6, min = 0](%567)
+  %570 = Conv[dilations = [1, 1], group = 1, kernel_shape = [1, 1], pads = [0, 0, 0, 0], strides = [1, 1]](%406, %571, %572)
+  %573 = Conv[dilations = [1, 1], group = 1, kernel_shape = [1, 1], pads = [0, 0, 0, 0], strides = [1, 1]](%570, %574, %575)
+  %411 = Clip[max = 6, min = 0](%573)
+  %576 = Conv[dilations = [1, 1], group = 576, kernel_shape = [3, 3], pads = [1, 1, 1, 1], strides = [1, 1]](%411, %577, %578)
+  %414 = Clip[max = 6, min = 0](%576)
+  %579 = Conv[dilations = [1, 1], group = 1, kernel_shape = [1, 1], pads = [0, 0, 0, 0], strides = [1, 1]](%414, %580, %581)
+  %417 = Add(%570, %579)
+  %582 = Conv[dilations = [1, 1], group = 1, kernel_shape = [1, 1], pads = [0, 0, 0, 0], strides = [1, 1]](%417, %583, %584)
+  %420 = Clip[max = 6, min = 0](%582)
+  %585 = Conv[dilations = [1, 1], group = 576, kernel_shape = [3, 3], pads = [1, 1, 1, 1], strides = [1, 1]](%420, %586, %587)
+  %423 = Clip[max = 6, min = 0](%585)
+  %588 = Conv[dilations = [1, 1], group = 1, kernel_shape = [1, 1], pads = [0, 0, 0, 0], strides = [1, 1]](%423, %589, %590)
+  %426 = Add(%417, %588)
+  %591 = Conv[dilations = [1, 1], group = 1, kernel_shape = [1, 1], pads = [0, 0, 0, 0], strides = [1, 1]](%426, %592, %593)
+  %429 = Clip[max = 6, min = 0](%591)
+  %594 = Conv[dilations = [1, 1], group = 576, kernel_shape = [3, 3], pads = [1, 1, 1, 1], strides = [2, 2]](%429, %595, %596)
+  %432 = Clip[max = 6, min = 0](%594)
+  %597 = Conv[dilations = [1, 1], group = 1, kernel_shape = [1, 1], pads = [0, 0, 0, 0], strides = [1, 1]](%432, %598, %599)
+  %600 = Conv[dilations = [1, 1], group = 1, kernel_shape = [1, 1], pads = [0, 0, 0, 0], strides = [1, 1]](%597, %601, %602)
+  %437 = Clip[max = 6, min = 0](%600)
+  %603 = Conv[dilations = [1, 1], group = 960, kernel_shape = [3, 3], pads = [1, 1, 1, 1], strides = [1, 1]](%437, %604, %605)
+  %440 = Clip[max = 6, min = 0](%603)
+  %606 = Conv[dilations = [1, 1], group = 1, kernel_shape = [1, 1], pads = [0, 0, 0, 0], strides = [1, 1]](%440, %607, %608)
+  %443 = Add(%597, %606)
+  %609 = Conv[dilations = [1, 1], group = 1, kernel_shape = [1, 1], pads = [0, 0, 0, 0], strides = [1, 1]](%443, %610, %611)
+  %446 = Clip[max = 6, min = 0](%609)
+  %612 = Conv[dilations = [1, 1], group = 960, kernel_shape = [3, 3], pads = [1, 1, 1, 1], strides = [1, 1]](%446, %613, %614)
+  %449 = Clip[max = 6, min = 0](%612)
+  %615 = Conv[dilations = [1, 1], group = 1, kernel_shape = [1, 1], pads = [0, 0, 0, 0], strides = [1, 1]](%449, %616, %617)
+  %452 = Add(%443, %615)
+  %618 = Conv[dilations = [1, 1], group = 1, kernel_shape = [1, 1], pads = [0, 0, 0, 0], strides = [1, 1]](%452, %619, %620)
+  %455 = Clip[max = 6, min = 0](%618)
+  %621 = Conv[dilations = [1, 1], group = 960, kernel_shape = [3, 3], pads = [1, 1, 1, 1], strides = [1, 1]](%455, %622, %623)
+  %458 = Clip[max = 6, min = 0](%621)
+  %624 = Conv[dilations = [1, 1], group = 1, kernel_shape = [1, 1], pads = [0, 0, 0, 0], strides = [1, 1]](%458, %625, %626)
+  %627 = Conv[dilations = [1, 1], group = 1, kernel_shape = [1, 1], pads = [0, 0, 0, 0], strides = [1, 1]](%624, %628, %629)
+  %463 = Clip[max = 6, min = 0](%627)
+  %464 = GlobalAveragePool(%463)
+  %465 = Shape(%463)
+  %466 = Constant[value = <Scalar Tensor []>]()
+  %467 = Gather[axis = 0](%465, %466)
+  %469 = Unsqueeze[axes = [0]](%467)
+  %471 = Concat[axis = 0](%469, %630)
+  %472 = Reshape(%464, %471)
+  %output = Gemm[alpha = 1, beta = 1, transB = 1](%472, %classifier.1.weight, %classifier.1.bias)
+  return %output
+}
