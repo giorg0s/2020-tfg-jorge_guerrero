@@ -12,6 +12,8 @@ import onnx
 import torch.onnx
 import numpy as np
 
+from onnx_tf.backend import prepare
+
 EXPORT_MOBILENET = "exported-models/mobilenet_v2.onnx"
 EXPORT_RESNET = "exported-models/resnet50.onnx"
 
@@ -79,8 +81,15 @@ def export_model():
         sys.stdout = original_stdout
 
 
+def onnx_to_tf(onnx_model, output):
+    onnx_model = onnx.load(onnx_model)  # load onnx model
+    tf_rep = prepare(onnx_model)  # prepare tf representation
+    tf_rep.export_graph(output)  # export the model
+
+
 def main():
     export_model()
+    onnx_to_tf("exported-models/resnet50.onnx", "resnet50-tf")
 
 
 if __name__ == '__main__':
