@@ -3,6 +3,7 @@
 import os
 import time
 import sys
+import warnings
 import onnxruntime
 from PIL import Image
 import torchvision.models as models
@@ -13,6 +14,9 @@ import torch.onnx
 import numpy as np
 
 from onnx_tf.backend import prepare
+import tensorflow as tf
+
+batch_size = 1
 
 EXPORT_MOBILENET = "exported-models/mobilenet_v2.onnx"
 EXPORT_RESNET = "exported-models/resnet50.onnx"
@@ -20,6 +24,10 @@ EXPORT_RESNET = "exported-models/resnet50.onnx"
 img = Image.open("resources/imgs/cat.jpg")
 img_tensor = ToTensor()(img).unsqueeze(0)
 cat_img = Variable(img_tensor)
+
+gpu_devices = tf.config.experimental.list_physical_devices('GPU')
+for device in gpu_devices:
+    tf.config.experimental.set_memory_growth(device, True)
 
 
 def to_numpy(tensor):
@@ -32,10 +40,15 @@ def export_model():
         original_model = models.resnet50(pretrained=True)
         original_model.eval()
         export_file = EXPORT_RESNET
+        model_out = original_model(cat_img)
     elif sys.argv[1] == 'mobilenet':
         original_model = models.mobilenet_v2(pretrained=True)
         original_model.eval()
         export_file = EXPORT_MOBILENET
+        model_out = original_model(cat_img)
+    else:
+        print("Model not found")
+        sys.exit(0)
 
     start = time.time()
 
@@ -65,7 +78,7 @@ def export_model():
     ort_outs = ort_session.run(None, ort_inputs)
 
     # compare ONNX Runtime and PyTorch results
-    np.testing.assert_allclose(to_numpy(original_model(cat_img)), ort_outs[0], rtol=1e-03, atol=1e-05)
+    np.testing.assert_allclose(to_numpy(model_out), ort_outs[0], rtol=1e-03, atol=1e-05)
 
     print("Exported model has been tested with ONNXRuntime, and the result looks good!")
 
@@ -80,17 +93,25 @@ def export_model():
         print('{}'.format(onnx.helper.printable_graph(exported_model.graph)))
         sys.stdout = original_stdout
 
-    print("Exporting ONNX model to TF-2.3.1...")
-    onnx_to_tf(export_file, os.path.splitext(export_file)[0] + "-tf")
+    print("Exporting ONNX model to TensorFlow...")
+    # onnx_to_tf(export_file, os.path.splitext(export_file)[0] + "-tf")
+    onnx_to_tf(export_file, "exported-models/resnet50-tf")
 
     print("\nDONE")
     sys.exit()
 
 
 def onnx_to_tf(onnx_model, output):
+    warnings.filterwarnings('ignore')  # Ignore all the warning messages in this tutorial
     onnx_model = onnx.load(onnx_model)  # load onnx model
-    tf_rep = prepare(onnx_model)  # prepare tf representation
+    tf_rep = prepare(onnx_model)
     tf_rep.export_graph(output)  # export the model
+
+    # print(tf_rep.inputs)  # Input nodes to the model
+    # print('-----')
+    # print(tf_rep.outputs)  # Output nodes from the model
+    # print('-----')
+    # print(tf_rep.tensor_dict)  # All nodes in the model
 
 
 if __name__ == '__main__':
