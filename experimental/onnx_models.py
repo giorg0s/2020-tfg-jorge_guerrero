@@ -16,14 +16,17 @@ import numpy as np
 from onnx_tf.backend import prepare
 import tensorflow as tf
 
-batch_size = 1
+batch_size = 50
 
 EXPORT_MOBILENET = "exported-models/mobilenet_v2.onnx"
 EXPORT_RESNET = "exported-models/resnet50.onnx"
 
-img = Image.open("resources/imgs/cat.jpg")
-img_tensor = ToTensor()(img).unsqueeze(0)
-cat_img = Variable(img_tensor)
+# Input to the model
+x = torch.randn(batch_size, 3, 5, 5, requires_grad=True)
+
+# img = Image.open("resources/imgs/cat.jpg")
+# img_tensor = ToTensor()(img).unsqueeze(0)
+# cat_img = Variable(img_tensor)
 
 gpu_devices = tf.config.experimental.list_physical_devices('GPU')
 for device in gpu_devices:
@@ -40,12 +43,12 @@ def export_model():
         original_model = models.resnet50(pretrained=True)
         original_model.eval()
         export_file = EXPORT_RESNET
-        model_out = original_model(cat_img)
+        model_out = original_model(x)
     elif sys.argv[1] == 'mobilenet':
         original_model = models.mobilenet_v2(pretrained=True)
         original_model.eval()
         export_file = EXPORT_MOBILENET
-        model_out = original_model(cat_img)
+        model_out = original_model(x)
     else:
         print("Model not found")
         sys.exit(0)
@@ -54,7 +57,7 @@ def export_model():
 
     # Export the model
     torch.onnx.export(original_model,  # model being run
-                      cat_img,  # model input (or a tuple for multiple inputs)
+                      x,  # model input (or a tuple for multiple inputs)
                       export_file,  # where to save the model (can be a file or file-like object)
                       verbose=False,
                       export_params=True,  # store the trained parameter weights inside the model file
@@ -74,7 +77,7 @@ def export_model():
     ort_session = onnxruntime.InferenceSession(export_file)
 
     # compute ONNX Runtime output prediction
-    ort_inputs = {ort_session.get_inputs()[0].name: to_numpy(cat_img)}
+    ort_inputs = {ort_session.get_inputs()[0].name: to_numpy(x)}
     ort_outs = ort_session.run(None, ort_inputs)
 
     # compare ONNX Runtime and PyTorch results
@@ -94,8 +97,8 @@ def export_model():
         sys.stdout = original_stdout
 
     print("Exporting ONNX model to TensorFlow...")
-    # onnx_to_tf(export_file, os.path.splitext(export_file)[0] + "-tf")
-    onnx_to_tf(export_file, "exported-models/resnet50-tf")
+    onnx_to_tf(export_file, os.path.splitext(export_file)[0] + "-tf")
+    # onnx_to_tf(export_file, "exported-models/resnet50-tf")
 
     print("\nDONE")
     sys.exit()

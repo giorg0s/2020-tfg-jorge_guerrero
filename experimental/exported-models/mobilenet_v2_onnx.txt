@@ -1,5 +1,5 @@
 graph torch-jit-export (
-  %input[FLOAT, batch_sizex3x1199x1200]
+  %input[FLOAT, batch_sizex3x5x5]
 ) initializers (
   %475[FLOAT, 32x3x3x3]
   %476[FLOAT, 32]
