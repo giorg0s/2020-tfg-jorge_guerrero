@@ -7,8 +7,6 @@ import warnings
 import onnxruntime
 from PIL import Image
 import torchvision.models as models
-from torchvision.transforms import ToTensor
-from torch.autograd import Variable
 import onnx
 import torch.onnx
 import numpy as np
